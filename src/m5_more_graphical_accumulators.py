@@ -98,7 +98,7 @@ def draw_squares_from_circle(n, circle, window):
       :type window: rg.RoseWindow
     """
     # -------------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #          Tests have been written for you (above).
     #
     # CONSIDER using the ACCUMULATOR IN GRAPHICS pattern,
@@ -111,10 +111,10 @@ def draw_squares_from_circle(n, circle, window):
     #          ** FIRST DO A CONCRETE EXAMPLE BY HAND! **
     ###########################################################################
     # -------------------------------------------------------------------------
-    circles = rg.Circle(rg.Point(circle.x, circle.y), circle.r)
-    circles.attach_to(window)
+
+    circle.attach_to(window)
     for k in range(n):
-        rectangle = rg.Rectangle(rg.Point(circle.x, circle,y), rg.Point(circle.x + circle.r, circle.y + circle.r))
+        rectangle = rg.Square(rg.Point(circle.center.x + (k * circle.radius), circle.center.y + (k * circle.radius)), circle.radius * 2)
         rectangle.attach_to(window)
     window.render()
 
@@ -140,6 +140,34 @@ def run_test_draw_circles_from_rectangle():
     #   Follow the same form as the example in a previous problem.
     ###########################################################################
     # -------------------------------------------------------------------------
+    title = 'Tests 1 and 2 of DRAW_SQUARES_FROM_CIRCLE: '
+    title = title + ' 7 little squares from green circle, 4 big squares'
+    window1 = rg.RoseWindow(650, 350, title)
+
+    # Test 1:
+    circle = rg.Circle(rg.Point(100, 100), 20)
+    circle.fill_color = 'green'
+    draw_squares_from_circle(7, circle, window1)
+
+    # Test 2:
+    circle = rg.Circle(rg.Point(350, 70), 50)
+    draw_squares_from_circle(4, circle, window1)
+    window1.close_on_mouse_click()
+
+    # -------------------------------------------------------------------------
+    # A third test on ANOTHER window.
+    # -------------------------------------------------------------------------
+    title = 'Test 3 of DRAW_SQUARES_FROM_CIRCLE: '
+    title += ' 20 teeny squares from blue circle!'
+    window2 = rg.RoseWindow(525, 300, title)
+
+    # Test 3:
+    circle = rg.Circle(rg.Point(50, 50), 10)
+    circle.fill_color = 'blue'
+    draw_squares_from_circle(20, circle, window2)
+
+    window2.close_on_mouse_click()
+
 
 
 def draw_circles_from_rectangle(m, n, rectangle, window):
@@ -195,6 +223,14 @@ def draw_circles_from_rectangle(m, n, rectangle, window):
     #          ** FIRST DO A CONCRETE EXAMPLE BY HAND! **
     ###########################################################################
     # -------------------------------------------------------------------------
+    rectangle.attach_to(window)
+    circle = rg.Circle(rg.Point(rectangle.get_lower_left_corner() + rectangle.get_width() / 2, rectangle.get_lower_left_corner - rectangle.get_height() / 2), 2 * rg.rectangle.get_height())
+    circle.fill_color = rectangle.fill_color()
+    circle.attach_to(window)
+    for k in range(m):
+        circle.center.x -= circle.radius * 2
+        circle.attach_to(window)
+    window.render()
 
 
 def run_test_draw_lines_from_rectangles():
